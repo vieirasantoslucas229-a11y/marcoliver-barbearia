@@ -259,9 +259,7 @@
       .g-tile:nth-child(5) { grid-column: 2; grid-row: 3; }
       .g-tile:nth-child(6) { display: none; }
       .redes-inner { grid-template-columns: 1fr; gap: 40px; }
-      @media (max-width: 600px) {
-        .foot-bar { flex-direction: column; text-align: center; gap: 14px; }
-      }
+      .loc-grid { grid-template-columns: 1fr; }
       .section { padding: 76px 0; }
       #agendar { padding: 88px 28px; }
     }
@@ -280,8 +278,17 @@
       .hero-sub { font-size: 11px; margin-bottom: 20px; }
       .hero-actions { flex-direction: column; align-items: flex-start; gap: 10px; }
       .hero-pager { right: 20px; bottom: 20px; }
+      .hero-scroll { display: none; }
+      .split-art { grid-template-columns: 1fr; }
+      .art-lg { height: 320px; }
+      .art-sm-pair { flex-direction: row; height: 150px; }
+      .art-sm { flex: 1; height: 150px; min-height: 0; }
       .serv-grid { grid-template-columns: 1fr; }
-      .dep-card { height: 300px; }
+      .exp-grid { flex-direction: column; align-items: stretch; gap: 12px; }
+      .exp-vid { width: 100%; max-width: 100%; height: 280px; }
+      .dep-slide { flex-direction: column; gap: 12px; }
+      .dep-card { width: 100%; height: 260px; }
+      .foot-bar { flex-direction: column; text-align: center; gap: 14px; }
       .section { padding: 60px 0; }
       #agendar { padding: 72px 20px; }
     }
