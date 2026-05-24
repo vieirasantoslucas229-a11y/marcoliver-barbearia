@@ -17,7 +17,7 @@
     /* ═══ TOKENS ════════════════════════════════════════════════ */
     :root {
       --bg: #080808; --surf: #0e0e0e; --surf2: #181818;
-      --text: #f0ebe4; --muted: #787878; --faint: #2e2e2e;
+      --text: #f0ebe4; --muted: #868686; --faint: #2e2e2e;
       --accent: #c8a46c; --border: rgba(255,255,255,0.06);
       --serif: 'Cormorant Garamond', Georgia, serif;
       --sans:  'DM Sans', system-ui, sans-serif;
@@ -240,8 +240,11 @@
 </head>
 <body>
 
+  <!-- ── SKIP LINK ─────────────────────────────────────────────── -->
+  <a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+
   <!-- ── NAV ──────────────────────────────────────────────────── -->
-  <nav class="nav" id="nav">
+  <nav class="nav" id="nav" aria-label="Principal">
     <a href="#" class="nav-logo">
       <img src="logo-marcoliver-transparent.png" alt="MarcOliver Barbearia">
     </a>
@@ -256,13 +259,13 @@
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
       Agendar
     </a>
-    <button class="nav-ham" id="ham" aria-label="Abrir menu">
+    <button class="nav-ham" id="ham" aria-label="Abrir menu" aria-expanded="false" aria-controls="mob">
       <span></span><span></span><span></span>
     </button>
   </nav>
 
   <!-- ── MOBILE MENU ───────────────────────────────────────────── -->
-  <nav class="mob-menu" id="mob">
+  <nav class="mob-menu" id="mob" aria-label="Menu mobile">
     <button class="mob-close" id="mob-x" aria-label="Fechar">×</button>
     <img src="logo-marcoliver-transparent.png" alt="MarcOliver">
     <a href="#sobre"       onclick="closeMob()">Sobre</a>
@@ -272,6 +275,9 @@
     <a href="#localizacao" onclick="closeMob()">Localização</a>
     <a href="https://sites.appbarber.com.br/marcoliverbarbe-b6za" target="_blank" rel="noopener">Agendar</a>
   </nav>
+
+  <!-- ── CONTEÚDO PRINCIPAL ───────────────────────────────────── -->
+  <main id="conteudo">
 
   <!-- ── HERO (SLIDESHOW) ─────────────────────────────────────── -->
   <section id="hero">
@@ -295,6 +301,10 @@
     <div class="hero-pager">
       <button class="pager-dot active" aria-label="Slide 1"></button>
       <button class="pager-dot" aria-label="Slide 2"></button>
+      <button class="hero-pause" id="hero-pause" aria-label="Pausar slideshow" aria-pressed="false">
+        <svg id="hero-pause-icon" width="10" height="12" viewBox="0 0 10 12" fill="currentColor" aria-hidden="true"><rect x="0" y="0" width="3" height="12"/><rect x="7" y="0" width="3" height="12"/></svg>
+        <svg id="hero-play-icon"  width="10" height="12" viewBox="0 0 10 12" fill="currentColor" aria-hidden="true" style="display:none"><polygon points="0,0 10,6 0,12"/></svg>
+      </button>
     </div>
   </section>
 
@@ -476,7 +486,7 @@
               <span class="rede-handle">@marcoliverbarbearia</span>
               <span class="rede-sub">Fotos e vídeos dos cortes diários</span>
             </div>
-            <span class="rede-arrow">↗</span>
+            <span class="rede-arrow" aria-hidden="true">↗</span>
           </a>
           <a class="rede-card" href="https://wa.me/5519987315596" target="_blank" rel="noopener">
             <div class="rede-ic">
@@ -486,7 +496,7 @@
               <span class="rede-handle">(19) 98731-5596</span>
               <span class="rede-sub">Atendimento e dúvidas via WhatsApp</span>
             </div>
-            <span class="rede-arrow">↗</span>
+            <span class="rede-arrow" aria-hidden="true">↗</span>
           </a>
           <a class="rede-card" href="https://sites.appbarber.com.br/marcoliverbarbe-b6za" target="_blank" rel="noopener">
             <div class="rede-ic">
@@ -496,7 +506,7 @@
               <span class="rede-handle">Agendar Online</span>
               <span class="rede-sub">Reserve seu horário pelo AppBarber</span>
             </div>
-            <span class="rede-arrow">↗</span>
+            <span class="rede-arrow" aria-hidden="true">↗</span>
           </a>
         </div>
       </div>
@@ -546,6 +556,8 @@
     </div>
   </section>
 
+  </main><!-- /#conteudo -->
+
   <!-- ── FOOTER ─────────────────────────────────────────────────── -->
   <footer id="contato">
     <div class="wrap">
@@ -575,25 +587,59 @@
     window.addEventListener('scroll', () => nav.classList.toggle('stuck', scrollY > 60), {passive:true});
 
     /* Mobile menu */
-    document.getElementById('ham').addEventListener('click', () => document.getElementById('mob').classList.add('open'));
+    const hamBtn = document.getElementById('ham');
+    const mobMenu = document.getElementById('mob');
+    hamBtn.addEventListener('click', () => {
+      mobMenu.classList.add('open');
+      hamBtn.setAttribute('aria-expanded', 'true');
+      const firstLink = mobMenu.querySelector('a, button');
+      if (firstLink) firstLink.focus();
+    });
     document.getElementById('mob-x').addEventListener('click', closeMob);
-    function closeMob() { document.getElementById('mob').classList.remove('open'); }
+    function closeMob() {
+      mobMenu.classList.remove('open');
+      hamBtn.setAttribute('aria-expanded', 'false');
+      hamBtn.focus();
+    }
+    /* Fechar menu com Escape */
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && mobMenu.classList.contains('open')) closeMob();
+    });
 
     /* Hero slideshow */
-    const heroSlides = document.querySelectorAll('.hero-slide');
-    const pagerDots  = document.querySelectorAll('.pager-dot');
-    let curSlide = 0, slideTimer;
+    const heroSlides  = document.querySelectorAll('.hero-slide');
+    const pagerDots   = document.querySelectorAll('.pager-dot');
+    const pauseBtn    = document.getElementById('hero-pause');
+    const pauseIcon   = document.getElementById('hero-pause-icon');
+    const playIcon    = document.getElementById('hero-play-icon');
+    let curSlide = 0, slideTimer, slidePaused = false;
+
     function goSlide(n) {
       heroSlides[curSlide].classList.remove('active');
       pagerDots[curSlide].classList.remove('active');
       curSlide = (n + heroSlides.length) % heroSlides.length;
       heroSlides[curSlide].classList.add('active');
       pagerDots[curSlide].classList.add('active');
-      clearInterval(slideTimer);
-      slideTimer = setInterval(() => goSlide(curSlide + 1), 5000);
     }
-    slideTimer = setInterval(() => goSlide(curSlide + 1), 5000);
-    pagerDots.forEach((dot, i) => dot.addEventListener('click', () => goSlide(i)));
+    function startTimer() {
+      clearInterval(slideTimer);
+      if (!slidePaused) slideTimer = setInterval(() => goSlide(curSlide + 1), 5000);
+    }
+    function togglePause() {
+      slidePaused = !slidePaused;
+      pauseBtn.setAttribute('aria-pressed', slidePaused);
+      pauseBtn.setAttribute('aria-label', slidePaused ? 'Retomar slideshow' : 'Pausar slideshow');
+      pauseIcon.style.display = slidePaused ? 'none' : '';
+      playIcon.style.display  = slidePaused ? '' : 'none';
+      if (slidePaused) clearInterval(slideTimer);
+      else startTimer();
+    }
+    startTimer();
+    pauseBtn.addEventListener('click', togglePause);
+    pagerDots.forEach((dot, i) => dot.addEventListener('click', () => {
+      goSlide(i);
+      startTimer(); /* reinicia timer sem pausar */
+    }));
 
     /* Depoimentos carousel */
     const depTrack = document.getElementById('dep-track');
