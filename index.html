@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MarcOliver Barbearia — Cortes premium em Campinas, SP.">
+  <title>MarcOliver Barbearia — Campinas, SP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <script src="image-slot.js"></script>
+  <style>
+    /* ═══ TOKENS ════════════════════════════════════════════════ */
+    :root {
+      /* Surfaces */
+      --bg: #080808; --surf: #0e0e0e; --surf2: #181818;
+      /* Text */
+      --text: #f0ebe4; --muted: #787878; --faint: #2e2e2e;
+      /* Brand */
+      --accent: #c8a46c; --wa: #25d366;
+      /* Border */
+      --border: rgba(255,255,255,0.06);
+      /* Fonts */
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans:  'DM Sans', system-ui, sans-serif;
+
+      /* ── Overlay aliases ─────────────────────────────────────── */
+      --bg-97:     rgba(8,8,8,.97);
+      --bg-90:     rgba(8,8,8,.9);
+      --bg-88:     rgba(8,8,8,.88);
+      --bg-75:     rgba(8,8,8,.75);
+      --bg-72:     rgba(8,8,8,.72);
+      --bg-58:     rgba(8,8,8,.58);
+      --bg-55:     rgba(8,8,8,.55);
+      --bg-42:     rgba(8,8,8,.42);
+      --bg-38:     rgba(8,8,8,.38);
+      --bg-25:     rgba(8,8,8,.25);
+      --bg-12:     rgba(8,8,8,.12);
+      --text-75:   rgba(240,235,228,.75);
+      --text-30:   rgba(240,235,228,.3);
+      --text-25:   rgba(240,235,228,.25);
+      --text-22:   rgba(240,235,228,.22);
+      --text-10:   rgba(240,235,228,.1);
+      --accent-30: rgba(200,164,108,.3);
+      --accent-20: rgba(200,164,108,.2);
+      --white-40:  rgba(255,255,255,.4);
+      --white-20:  rgba(255,255,255,.2);
+      --white-14:  rgba(255,255,255,.14);
+      --white-08:  rgba(255,255,255,.08);
+      --surf2-80:  rgba(24,24,24,.8);
+
+      /* ── Spacing (4px base) ──────────────────────────────────── */
+      --sp-1: 4px;  --sp-2: 8px;   --sp-3: 12px;  --sp-4: 16px;
+      --sp-5: 20px; --sp-6: 24px;  --sp-7: 28px;  --sp-8: 32px;
+      --sp-9: 36px; --sp-10: 40px; --sp-12: 48px; --sp-14: 56px;
+      --sp-16: 64px; --sp-20: 80px; --sp-22: 88px; --sp-24: 96px;
+      --sp-28: 110px; --sp-30: 120px;
+
+      /* ── Border-radius ───────────────────────────────────────── */
+      --r-xs:   2px;
+      --r-md:   12px;
+      --r-pill: 100px;
+
+      /* ── Shadows ─────────────────────────────────────────────── */
+      --shadow-nav: 0 2px 24px rgba(0,0,0,.45);
+      --shadow-fab: 0 4px 22px rgba(0,0,0,.4);
+
+      /* ── Z-index ─────────────────────────────────────────────── */
+      --z-nav: 900; --z-mob: 850; --z-fab: 800; --z-content: 2;
+
+      /* ── Motion ──────────────────────────────────────────────── */
+      --dur-fast:   .2s;
+      --dur-base:   .25s;
+      --dur-mid:    .4s;
+      --dur-slow:   .75s;
+      --dur-reveal: .8s;
+      --ease:       ease;
+
+      /* ── Type scale ──────────────────────────────────────────── */
+      --text-2xs: 9px;
+      --text-xs:  10px;
+      --text-sm:  11px;
+      --text-base: 12px;
+      --text-md:  13px;
+      --text-lg:  14px;
+      --text-xl:  15px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    image-slot { display: block; }
+
+    /* ── Focus visible global ────────────────────────────────── */
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: var(--r-xs);
+    }
+
+    /* ═══ LAYOUT ════════════════════════════════════════════════ */
+    .wrap { max-width: 1220px; margin: 0 auto; padding: 0 60px; }
+    .section { padding: var(--sp-28) 0; }
+
+    /* ═══ REVEAL ════════════════════════════════════════════════ */
+    .r { opacity: 0; transform: translateY(22px); transition: opacity var(--dur-reveal) var(--ease), transform var(--dur-reveal) var(--ease); }
+    .r.in { opacity: 1; transform: none; }
+    .r.d1 { transition-delay: .12s; } .r.d2 { transition-delay: .22s; } .r.d3 { transition-delay: .32s; }
+
+    /* ═══ SHARED TYPE ═══════════════════════════════════════════ */
+    .tag { display: inline-flex; align-items: center; gap: var(--sp-3); font-size: var(--text-xs); font-weight: 500; letter-spacing: .28em; text-transform: uppercase; color: var(--muted); }
+    .tag::before { content: ''; display: block; width: 28px; height: 1px; background: var(--accent); flex-shrink: 0; }
+    .h2 { font-family: var(--serif); font-size: clamp(2.2rem, 4vw, 3.6rem); font-weight: 300; line-height: 1.04; letter-spacing: -.02em; }
+    .h2 em { font-style: italic; }
+
+    /* ═══ CARD BASE ═════════════════════════════════════════════ */
+    .card { position: relative; overflow: hidden; background: var(--surf2); border: 1px solid var(--border); transition: background var(--dur-base) var(--ease), border-color var(--dur-base) var(--ease); }
+
+    /* ═══ BUTTONS ═══════════════════════════════════════════════ */
+    .btn { display: inline-flex; align-items: center; gap: 10px; font-family: var(--sans); font-size: var(--text-xs); font-weight: 500; letter-spacing: .16em; text-transform: uppercase; padding: 15px var(--sp-9); cursor: pointer; transition: opacity var(--dur-fast) var(--ease); border-radius: var(--r-pill); }
+    .btn:hover { opacity: .8; }
+    .btn-light { background: var(--text); color: var(--bg); }
+    .btn-dark  { background: var(--bg); color: var(--text); }
+    .btn-ghost { border: 1px solid var(--white-20); color: var(--muted); padding: 14px var(--sp-8); transition: border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+    .btn-ghost:hover { border-color: var(--white-40); color: var(--text); opacity: 1; }
+
+    /* ═══ NAV ═══════════════════════════════════════════════════ */
+    .nav { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: var(--z-nav); display: flex; align-items: center; justify-content: space-between; width: calc(100% - 160px); max-width: 960px; background: rgba(240,235,228,.88); backdrop-filter: blur(24px) saturate(1.3); border: 1px solid rgba(8,8,8,.1); border-radius: var(--r-pill); padding: 6px 6px 6px 16px; transition: top var(--dur-mid) var(--ease), left var(--dur-mid) var(--ease), width var(--dur-mid) var(--ease), max-width var(--dur-mid) var(--ease), border-radius var(--dur-mid) var(--ease), background var(--dur-mid) var(--ease), padding var(--dur-mid) var(--ease), transform var(--dur-mid) var(--ease), box-shadow var(--dur-mid) var(--ease), border-color var(--dur-mid) var(--ease); }
+    .nav.stuck { top: 0; left: 0; transform: none; width: 100%; max-width: 100%; border-radius: 0; background: rgba(240,235,228,.97); padding: 6px 48px; border-color: transparent; border-bottom: 1px solid rgba(8,8,8,.1); box-shadow: 0 1px 24px rgba(8,8,8,.08); }
+    .nav-logo { display: flex; align-items: center; }
+    .nav-logo img { height: 40px; width: auto; filter: brightness(0); transition: opacity var(--dur-fast); }
+    .nav-logo img:hover { opacity: .7; }
+    .nav-links { display: flex; gap: var(--sp-8); list-style: none; align-items: center; }
+    .nav-links a { font-size: var(--text-xs); font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: rgba(8,8,8,.6); transition: color var(--dur-fast); }
+    .nav-links a:hover { color: rgba(8,8,8,1); }
+    .nav-cta { background: var(--bg); color: var(--text); border-radius: var(--r-pill); font-family: var(--sans); font-size: var(--text-xs); font-weight: 500; letter-spacing: .14em; text-transform: uppercase; padding: 10px var(--sp-6); display: inline-flex; align-items: center; gap: var(--sp-2); transition: opacity var(--dur-fast); }
+    .nav-cta:hover { opacity: .8; }
+    .nav-ham { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: var(--sp-1); }
+    .nav-ham span { display: block; width: 22px; height: 1px; background: var(--bg); }
+
+    /* ═══ MOBILE MENU ═══════════════════════════════════════════ */
+    .mob-menu { display: none; position: fixed; inset: 0; z-index: var(--z-mob); background: var(--bg-97); backdrop-filter: blur(20px); flex-direction: column; align-items: center; justify-content: center; gap: 30px; }
+    .mob-menu.open { display: flex; }
+    .mob-menu img { height: 54px; margin-bottom: var(--sp-2); }
+    .mob-menu a { font-family: var(--serif); font-size: 2.4rem; font-weight: 300; transition: color var(--dur-fast); }
+    .mob-menu a:hover { color: var(--muted); }
+    .mob-close { position: absolute; top: 22px; right: 26px; background: none; border: none; color: var(--muted); font-size: 30px; cursor: pointer; }
+
+    /* ═══ HERO ══════════════════════════════════════════════════ */
+    #hero { height: 100vh; height: 100dvh; position: relative; overflow: hidden; background: var(--surf2); }
+
+    /* Slides */
+    .hero-slides { position: absolute; inset: 0; }
+    .hero-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.4s var(--ease); }
+    .hero-slide.active { opacity: 1; }
+    .hero-slide image-slot { width: 100%; height: 100%; }
+
+    /* Aurora blobs — gold tinted, float slowly */
+    .hero-aurora { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .hero-aurora-blob { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; }
+    .hero-aurora-blob--1 {
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(200,164,108,.2) 0%, transparent 65%);
+      top: -10%; left: -15%;
+      animation: auroraBlob 14s ease-in-out infinite;
+    }
+    .hero-aurora-blob--2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(200,164,108,.13) 0%, transparent 65%);
+      bottom: 5%; right: -5%;
+      animation: auroraBlob 10s ease-in-out 4s infinite reverse;
+    }
+    @keyframes auroraBlob {
+      0%,100% { transform: translate(0,0) scale(1); opacity: .6; }
+      33% { transform: translate(60px,-40px) scale(1.12); opacity: .85; }
+      66% { transform: translate(-40px,60px) scale(.9); opacity: .5; }
+    }
+
+    /* Grid pattern overlay */
+    .hero-grid {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 80px 80px;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.5) 30%, rgba(0,0,0,.2) 70%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.5) 30%, rgba(0,0,0,.2) 70%, transparent 100%);
+    }
+
+    /* Veil — cinematic: darker left + bottom rise */
+    .hero-veil {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to right, rgba(8,8,8,.62) 0%, rgba(8,8,8,.3) 55%, rgba(8,8,8,.05) 100%),
+        linear-gradient(to top, rgba(8,8,8,.75) 0%, rgba(8,8,8,.35) 35%, transparent 75%);
+    }
+
+    /* Body */
+    .hero-body { position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: var(--z-content); padding: 90px 60px 80px; display: flex; flex-direction: column; justify-content: flex-end; }
+
+    /* Badge */
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: var(--sp-2);
+      padding: 7px 18px; border-radius: var(--r-pill);
+      font-size: var(--text-xs); font-weight: 500; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--text); backdrop-filter: blur(10px);
+      background: linear-gradient(135deg, rgba(200,164,108,.1), rgba(8,8,8,.5));
+      border: 1px solid rgba(200,164,108,.45);
+      box-shadow: 0 0 24px rgba(200,164,108,.07), inset 0 1px 0 rgba(200,164,108,.12);
+      margin-bottom: var(--sp-5); white-space: nowrap;
+      animation: heroReveal .8s cubic-bezier(.16,1,.3,1) .1s both;
+    }
+    .hero-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; box-shadow: 0 0 8px var(--accent); animation: dotBlink 2s ease-in-out infinite; }
+    @keyframes dotBlink { 0%,100%{opacity:1} 50%{opacity:.35} }
+
+    /* H1 */
+    .hero-h1 {
+      font-family: var(--serif); font-size: clamp(3.6rem, 7vw, 8rem);
+      font-weight: 300; line-height: .92; letter-spacing: -.025em; margin-bottom: 28px;
+      animation: heroReveal 1s cubic-bezier(.16,1,.3,1) .25s both;
+    }
+    .hero-h1 em { font-style: italic; color: var(--accent); filter: drop-shadow(0 0 24px rgba(200,164,108,.35)); }
+
+    /* Subtitle + actions — staggered entrance */
+    .hero-sub {
+      font-size: var(--text-base); color: var(--muted); letter-spacing: .05em;
+      margin-bottom: var(--sp-8); line-height: 1.6;
+      animation: heroReveal 1s cubic-bezier(.16,1,.3,1) .4s both;
+    }
+    .hero-actions {
+      display: flex; gap: 14px; flex-wrap: wrap;
+      animation: heroReveal 1s cubic-bezier(.16,1,.3,1) .55s both;
+    }
+    @keyframes heroReveal { from { opacity:0; transform:translateY(36px); } to { opacity:1; transform:translateY(0); } }
+
+    /* CTA button — shimmer + glow */
+    .btn-hero {
+      position: relative; overflow: hidden;
+      background: var(--text); color: var(--bg); border-radius: var(--r-pill);
+      box-shadow: 0 8px 32px -8px rgba(240,235,228,.25);
+      transition: transform var(--dur-mid) cubic-bezier(.16,1,.3,1), box-shadow var(--dur-mid) cubic-bezier(.16,1,.3,1), opacity var(--dur-fast);
+    }
+    .btn-hero::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.3) 50%, transparent 100%);
+      background-size: 200% 100%;
+      animation: shimmer 3.5s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .btn-hero:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 16px 48px -8px rgba(240,235,228,.35); opacity: 1; }
+    @keyframes shimmer { 0%{ background-position:-200% center} 100%{ background-position:200% center} }
+
+    /* Pager */
+    .hero-pager { position: absolute; bottom: var(--sp-9); right: 60px; z-index: var(--z-content); display: flex; gap: var(--sp-2); align-items: center; }
+    .pager-dot { width: 22px; height: 2px; background: var(--text-25); border: none; cursor: pointer; padding: 0; transition: background var(--dur-base), width var(--dur-base); }
+    .pager-dot.active { background: var(--text); width: 36px; }
+
+    /* Floating social proof tags (desktop only) */
+    .hero-float-tag {
+      position: absolute; display: flex; align-items: center; gap: 8px;
+      background: rgba(8,8,8,.65); backdrop-filter: blur(16px);
+      border: 1px solid rgba(200,164,108,.2); border-radius: var(--r-pill);
+      padding: 8px 18px; font-size: var(--text-2xs); font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--text);
+      z-index: var(--z-content); pointer-events: none; white-space: nowrap;
+    }
+    .hero-float-tag .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 6px var(--accent); flex-shrink: 0; }
+    @keyframes stickerFloat0 { 0%,100%{transform:translateY(0) rotate(-2deg)} 50%{transform:translateY(-14px) rotate(2deg)} }
+    @keyframes stickerFloat1 { 0%,100%{transform:translateY(0) rotate(1.5deg)} 50%{transform:translateY(-10px) rotate(-3deg)} }
+    @keyframes stickerFloat2 { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-12px) rotate(3deg)} }
+
+    /* Scroll indicator — vertical */
+    .hero-scroll { position: absolute; left: 60px; bottom: 60px; z-index: var(--z-content); display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .scroll-txt { font-size: var(--text-2xs); letter-spacing: .22em; text-transform: uppercase; color: var(--muted); writing-mode: vertical-rl; transform: rotate(180deg); }
+    .scroll-line { width: 1px; height: 56px; background: rgba(255,255,255,.08); position: relative; overflow: hidden; }
+    .scroll-line::after { content: ''; position: absolute; top: -100%; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, var(--accent), rgba(200,164,108,.2)); animation: runbar 2.2s ease-in-out infinite; }
+    @keyframes runbar { from{top:-100%} to{top:100%} }
+
+    /* ═══ TICKER ════════════════════════════════════════════════ */
+    .ticker { background: var(--text); border-top: 1px solid rgba(8,8,8,.07); border-bottom: 1px solid rgba(8,8,8,.1); overflow: hidden; padding: 13px 0; }
+    .ticker-track { display: flex; white-space: nowrap; animation: tick 30s linear infinite; }
+    .ticker-track span { font-size: var(--text-xs); font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: rgba(8,8,8,.42); padding: 0 22px; flex-shrink: 0; }
+    .ticker-track .sep { color: var(--accent); padding: 0 6px; }
+    @keyframes tick { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ═══ SOBRE ═════════════════════════════════════════════════ */
+    #sobre { background: var(--text); }
+    #sobre .tag { color: rgba(8,8,8,.45); }
+    #sobre .tag::before { background: var(--accent); }
+    #sobre .sobre-txt .h2 { color: var(--bg); }
+    #sobre .sobre-txt .h2 em { color: var(--accent); }
+    #sobre .sobre-txt p { color: rgba(8,8,8,.6); }
+    #sobre .sobre-txt strong { color: var(--bg); font-weight: 600; }
+    .sobre-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas: "txt foto" "stats foto";
+      column-gap: var(--sp-20);
+      row-gap: var(--sp-6);
+      align-items: start;
+    }
+    .sobre-txt  { grid-area: txt; }
+    .sobre-foto { grid-area: foto; }
+    .meta-grid  { grid-area: stats; }
+    .sobre-txt .tag { margin-bottom: 18px; }
+    .sobre-txt .h2 { margin-bottom: var(--sp-6); }
+    .sobre-txt p { font-size: var(--text-xl); line-height: 1.9; color: var(--muted); margin-bottom: var(--sp-4); }
+    .sobre-txt strong { color: var(--text); font-weight: 500; }
+    .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px var(--sp-8); list-style: none; padding-top: var(--sp-8); border-top: 1px solid rgba(8,8,8,.1); }
+    .meta-grid li { display: flex; flex-direction: column; gap: var(--sp-1); }
+    .meta-grid strong { font-family: var(--serif); font-size: 2.8rem; font-weight: 300; line-height: 1; color: var(--bg); }
+    .meta-grid span { font-size: var(--text-2xs); font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: rgba(8,8,8,.45); }
+    .sobre-foto { display: flex; }
+    .sobre-foto-card { width: 100%; height: 580px; border-radius: var(--r-md); overflow: hidden; box-shadow: 0 32px 80px rgba(8,8,8,.18), 0 0 0 2px rgba(200,164,108,.3); }
+    .art-card { position: relative; overflow: hidden; cursor: pointer; }
+    .art-card img { transition: transform var(--dur-slow) var(--ease); }
+    .art-card:hover img { transform: scale(1.04); }
+    .art-lbl { position: absolute; bottom: 10px; left: 10px; background: var(--bg-72); backdrop-filter: blur(4px); padding: 4px 10px; font-size: var(--text-2xs); font-weight: 500; letter-spacing: .15em; text-transform: uppercase; color: var(--text); pointer-events: none; }
+
+    /* ═══ EXPERIÊNCIA ═══════════════════════════════════════════ */
+    #experiencia { background: var(--surf2); }
+    .exp-hd { text-align: center; margin-bottom: var(--sp-12); }
+    .exp-hd .tag { justify-content: center; margin-bottom: 14px; }
+    .exp-hd p { font-size: var(--text-lg); color: var(--muted); margin-top: var(--sp-3); }
+    .exp-row { display: flex; align-items: center; gap: 28px; }
+    .exp-window { flex: 1; overflow: hidden; min-width: 0; }
+    .exp-track { display: flex; transition: transform .55s var(--ease); width: 100%; }
+    .exp-slide { flex: 0 0 100%; width: 100%; display: flex; justify-content: center; box-sizing: border-box; }
+    .exp-card { width: 100%; height: 540px; position: relative; overflow: hidden; background: #000; border-radius: var(--r-md); }
+    .exp-card iframe { width: 100%; height: 100%; border: 0; display: block; }
+    .exp-dots { display: flex; justify-content: center; gap: 8px; margin-top: var(--sp-8); }
+    .e-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--white-22); border: none; cursor: pointer; padding: 0; transition: background var(--dur-fast), transform var(--dur-fast); }
+    .e-dot.active { background: var(--accent); transform: scale(1.4); }
+
+    /* ═══ SERVIÇOS ══════════════════════════════════════════════ */
+    #servicos { background: var(--text); position: relative; overflow: hidden; }
+    #servicos::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 60% 50% at 50% 60%, rgba(200,164,108,.04) 0%, transparent 70%);
+    }
+    #servicos .tag { color: rgba(8,8,8,.45); }
+    #servicos .tag::before { background: var(--accent); }
+    #servicos .serv-hd .h2 { color: var(--bg); }
+    #servicos .serv-hd .h2 em { color: var(--accent); }
+    #servicos .wrap { position: relative; }
+    .serv-hd { text-align: center; margin-bottom: var(--sp-14); }
+    .serv-hd .tag { justify-content: center; margin-bottom: 14px; }
+    .serv-hd p { font-size: var(--text-lg); color: rgba(8,8,8,.5); margin-top: var(--sp-3); }
+    .serv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .serv-card {
+      background: rgba(255,255,255,.8);
+      border: 1px solid rgba(8,8,8,.08);
+      border-radius: var(--r-md);
+      padding: var(--sp-10) var(--sp-7);
+      position: relative; overflow: hidden;
+      box-shadow: 0 2px 16px rgba(8,8,8,.06);
+      transition: transform var(--dur-mid) cubic-bezier(.16,1,.3,1),
+                  border-color var(--dur-mid) var(--ease),
+                  box-shadow var(--dur-mid) var(--ease),
+                  background var(--dur-mid) var(--ease);
+    }
+    .serv-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent 0%, rgba(200,164,108,.3) 50%, transparent 100%);
+      transition: opacity var(--dur-mid) var(--ease);
+      opacity: 1;
+    }
+    .serv-card::after {
+      content: ''; position: absolute;
+      bottom: -40px; right: -40px;
+      width: 120px; height: 120px;
+      background: radial-gradient(circle, rgba(200,164,108,.12) 0%, transparent 70%);
+      border-radius: 50%;
+      transition: opacity var(--dur-mid) var(--ease);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .serv-card:hover {
+      transform: translateY(-6px);
+      background: #fff;
+      border-color: rgba(200,164,108,.4);
+      box-shadow: 0 20px 48px rgba(8,8,8,.13), 0 0 0 1px rgba(200,164,108,.12);
+    }
+    .serv-card:hover::before { background: linear-gradient(90deg, transparent 0%, rgba(200,164,108,.6) 50%, transparent 100%); }
+    .serv-card:hover::after { opacity: 1; }
+    .icon-circ {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: rgba(200,164,108,.1);
+      border: 1px solid rgba(200,164,108,.28);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: var(--sp-6);
+      transition: background var(--dur-mid) var(--ease),
+                  border-color var(--dur-mid) var(--ease),
+                  box-shadow var(--dur-mid) var(--ease);
+    }
+    .serv-card:hover .icon-circ {
+      background: rgba(200,164,108,.2);
+      border-color: rgba(200,164,108,.6);
+      box-shadow: 0 0 22px rgba(200,164,108,.28);
+    }
+    .icon-circ svg { stroke: rgba(200,164,108,.85); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transition: stroke var(--dur-mid) var(--ease); }
+    .serv-card:hover .icon-circ svg { stroke: var(--accent); }
+    .serv-card h3 { font-family: var(--serif); font-size: 1.35rem; font-weight: 400; margin-bottom: var(--sp-2); letter-spacing: .01em; color: var(--bg); }
+    .serv-card p { font-size: var(--text-md); line-height: 1.7; color: rgba(8,8,8,.55); }
+
+    /* ═══ DEPOIMENTOS ═══════════════════════════════════════════ */
+    #depoimentos { background: var(--bg); }
+    .dep-hd { text-align: center; margin-bottom: var(--sp-14); }
+    .dep-hd .tag { justify-content: center; margin-bottom: 14px; }
+    .dep-row { display: flex; align-items: center; gap: 28px; }
+    .t-nav { background: none; border: 1px solid var(--border); color: var(--muted); width: 48px; height: 48px; border-radius: 50%; font-size: 1.3rem; cursor: pointer; flex-shrink: 0; transition: border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); display: flex; align-items: center; justify-content: center; }
+    .t-nav:hover { border-color: var(--text-30); color: var(--text); }
+    .dep-window { flex: 1; overflow: hidden; min-width: 0; }
+    .dep-track { display: flex; transition: transform .55s var(--ease); width: 100%; }
+    .dep-slide { flex: 0 0 100%; width: 100%; display: flex; justify-content: center; box-sizing: border-box; }
+    .dep-card { width: 320px; flex-shrink: 0; height: 560px; position: relative; overflow: hidden; background: var(--surf2); border-radius: var(--r-md); }
+    .dep-card iframe { width: 100%; height: 100%; border: 0; display: block; }
+    .dep-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 60px; height: 60px; border-radius: 50%; background: var(--text-10); border: 1px solid var(--text-25); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; transition: background var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
+    .dep-card:hover .dep-play { background: var(--text-22); transform: translate(-50%,-50%) scale(1.08); }
+    .dep-play svg { margin-left: 3px; }
+    .dep-info { position: absolute; bottom: 0; left: 0; right: 0; padding: var(--sp-6) var(--sp-5) var(--sp-5); background: linear-gradient(to top, var(--bg-90), transparent); pointer-events: none; }
+    .dep-name { font-size: var(--text-lg); font-weight: 500; margin-bottom: var(--sp-1); }
+    .dep-stars { color: var(--accent); font-size: var(--text-base); letter-spacing: 2px; }
+    .dep-dots { display: flex; justify-content: center; gap: var(--sp-2); margin-top: 28px; }
+    .d-dot { width: 28px; height: 2px; background: var(--faint); border: none; cursor: pointer; transition: background var(--dur-base) var(--ease), width var(--dur-base) var(--ease); padding: 0; }
+    .d-dot.active { background: var(--text); }
+
+    /* ═══ GALERIA ═══════════════════════════════════════════════ */
+    #galeria { background: var(--surf); }
+    .gal-hd { text-align: center; margin-bottom: var(--sp-12); }
+    .gal-hd .tag { justify-content: center; margin-bottom: 14px; }
+    .gallery-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 320px 250px; gap: 4px; }
+    .g-tile { position: relative; overflow: hidden; cursor: pointer; }
+    .g-tile:nth-child(1) { grid-row: 1 / 3; }
+    .g-tile image-slot { width: 100%; height: 100%; transition: transform var(--dur-slow) var(--ease); }
+    .g-tile:hover image-slot { transform: scale(1.04); }
+    .g-lbl { position: absolute; bottom: 0; left: 0; width: 100%; padding: var(--sp-2) 14px var(--sp-3); background: linear-gradient(to top, var(--bg-75), transparent); font-size: var(--text-2xs); font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--text); pointer-events: none; }
+
+
+    /* ═══ AGENDAR CTA ═══════════════════════════════════════════ */
+    #agendar { background: var(--text); padding: var(--sp-30) 60px; text-align: center; }
+    #agendar .tag { color: var(--bg-42); margin-bottom: 18px; }
+    #agendar .tag::before { background: var(--bg-25); }
+    #agendar .h2 { color: var(--bg); max-width: 580px; margin: 0 auto 44px; }
+    #agendar .h2 em { color: var(--bg-38); }
+
+    /* ═══ LOCALIZAÇÃO ═══════════════════════════════════════════ */
+    #localizacao { background: var(--text); position: relative; overflow: hidden; }
+    #localizacao::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 55% 70% at 25% 50%, rgba(200,164,108,.04) 0%, transparent 70%);
+    }
+    #localizacao .tag { color: rgba(8,8,8,.45); }
+    #localizacao .tag::before { background: var(--accent); }
+    #localizacao .h2 { color: var(--bg); }
+    #localizacao .h2 em { color: var(--accent); }
+    #localizacao .wrap { position: relative; }
+    .loc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: stretch; }
+    .loc-left .tag { margin-bottom: 18px; }
+    .loc-left .h2 { margin-bottom: var(--sp-10); }
+    .info-blk { margin-bottom: var(--sp-8); }
+    .info-lbl { font-size: var(--text-2xs); font-weight: 500; letter-spacing: .25em; text-transform: uppercase; color: rgba(8,8,8,.4); margin-bottom: 7px; }
+    .info-val { font-size: var(--text-xl); line-height: 1.7; color: rgba(8,8,8,.75); }
+    .info-val a { transition: color var(--dur-fast); }
+    .info-val a:hover { color: var(--accent); }
+    .loc-cta { display: flex; gap: 12px; margin-top: var(--sp-8); flex-wrap: wrap; }
+    .loc-cta .btn { font-size: var(--text-2xs); padding: 13px 22px; gap: 8px; }
+    .loc-cta .btn svg { flex-shrink: 0; }
+    .btn-gmaps { background: #1a73e8; color: #fff; border: none; }
+    .btn-gmaps:hover { background: #1557b0; opacity: 1; }
+    .btn-waze { background: #33ccff; color: #0d1b2a; border: none; }
+    .btn-waze:hover { background: #00b8e6; opacity: 1; }
+    .map-box {
+      min-height: 420px;
+      overflow: hidden; background: #e8e2d8; position: relative;
+      border-radius: var(--r-md);
+      border: 1px solid rgba(200,164,108,.3);
+      box-shadow: 0 16px 48px rgba(8,8,8,.12), 0 0 0 1px rgba(200,164,108,.08);
+      transition: border-color var(--dur-mid) var(--ease), box-shadow var(--dur-mid) var(--ease);
+    }
+    .map-box:hover {
+      border-color: rgba(200,164,108,.5);
+      box-shadow: 0 24px 60px rgba(8,8,8,.16), 0 0 0 1px rgba(200,164,108,.14);
+    }
+    .map-box iframe { width: 100%; height: calc(100% + 34px); border: 0; filter: saturate(1.15) contrast(1.03); opacity: 1; position: absolute; top: 0; left: 0; }
+
+    /* ═══ FOOTER ════════════════════════════════════════════════ */
+    footer { background: var(--bg); border-top: 1px solid var(--border); }
+    .foot-bar { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-6); padding: 28px 0; }
+    .foot-bar img { height: 44px; width: auto; opacity: .85; }
+    .foot-copy { font-size: var(--text-sm); color: var(--muted); }
+    .foot-links { display: flex; gap: var(--sp-6); }
+    .foot-links a { font-size: var(--text-sm); color: var(--muted); letter-spacing: .04em; transition: color var(--dur-fast); }
+    .foot-links a:hover { color: var(--text); }
+
+    /* ═══ REAL IMAGES ════════════════════════════════════════════ */
+    .hero-slide img, .art-card img, .g-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .sobre-split .art-lg img   { object-position: center 15%; }
+    .sobre-split .art-sm img   { object-position: center center; }
+
+    /* ═══ WA FAB ════════════════════════════════════════════════ */
+    #wa-fab { position: fixed; bottom: 28px; right: 28px; z-index: var(--z-fab); width: 56px; height: 56px; border-radius: 50%; background: var(--wa); color: #fff; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-fab); transition: transform var(--dur-fast) var(--ease); }
+    #wa-fab:hover { transform: scale(1.1); }
+
+    /* ═══ MODERN VARIANT (Tweaks) ═══════════════════════════════ */
+    body.modern { --serif: 'DM Sans', system-ui, sans-serif; }
+    body.modern .h2 em, body.modern .hero-h1 em { font-style: normal; font-weight: 500; }
+
+    /* ═══ RESPONSIVE — tablet ══════════════════════════════════ */
+    @media (max-width: 900px) {
+      .wrap { padding: 0 28px; }
+      .nav { top: 12px; width: calc(100% - 32px); padding: 7px 7px 7px 20px; }
+      .nav.stuck { top: 0; width: 100%; padding: 10px var(--sp-6); }
+      .nav-links { gap: 18px; }
+      .nav-links a { font-size: var(--text-2xs); letter-spacing: .09em; }
+      .nav-cta { font-size: var(--text-2xs); padding: var(--sp-2) 16px; }
+      .nav-logo img { height: 36px; }
+      .hero-body { padding: 80px 28px 56px; }
+      .hero-h1 { font-size: clamp(3rem, 7vw, 5rem); }
+      .sobre-split { grid-template-columns: 1fr; grid-template-areas: "foto" "txt" "stats"; gap: var(--sp-8); }
+      .sobre-foto-card { height: 400px; }
+      .exp-bento { height: 440px; }
+      .serv-grid { grid-template-columns: 1fr 1fr; }
+      .dep-row { gap: 14px; }
+      .dep-card { width: 280px; height: 460px; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 260px 220px 220px; }
+      .g-tile:nth-child(1) { grid-column: 1/3; grid-row: 1; }
+      .g-tile:nth-child(2) { grid-column: 1; grid-row: 2; }
+      .g-tile:nth-child(3) { grid-column: 2; grid-row: 2; }
+      .g-tile:nth-child(4) { grid-column: 1; grid-row: 3; }
+      .g-tile:nth-child(5) { grid-column: 2; grid-row: 3; }
+      .g-tile:nth-child(6) { display: none; }
+
+      .section { padding: 76px 0; }
+      #agendar { padding: var(--sp-22) 28px; }
+    }
+
+    /* ═══ RESPONSIVE — mobile ══════════════════════════════════ */
+    @media (max-width: 600px) {
+      .wrap { padding: 0 var(--sp-5); }
+      .nav { top: 8px; width: calc(100% - 20px); padding: 5px 5px 5px 10px; }
+      .nav.stuck { top: 0; width: 100%; padding: 7px 14px; }
+      .nav-logo img { height: 22px; }
+      .nav-links { display: flex; gap: 5px; }
+      .nav-links a { font-size: 7.5px; letter-spacing: .06em; }
+      .nav-cta { font-size: 7.5px; padding: 7px 10px; letter-spacing: .06em; }
+      .nav-ham { display: none; }
+      #hero { height: 72vh; height: 72dvh; }
+      .hero-body { padding: 60px 20px 36px; }
+      .hero-badge { font-size: var(--text-2xs); margin-bottom: var(--sp-3); }
+      .hero-h1 { font-size: clamp(2.4rem, 10vw, 3.4rem); margin-bottom: 16px; }
+      .hero-sub { font-size: var(--text-sm); margin-bottom: var(--sp-5); }
+      .hero-actions { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .hero-pager { right: 20px; bottom: 20px; }
+      .hero-scroll { display: none; }
+      .hero-float-tag { display: none; }
+      /* ── Tipografia geral mobile ─────────────────────────────── */
+      .h2 { font-size: clamp(1.65rem, 7vw, 2.1rem); }
+      .tag { font-size: .6rem; letter-spacing: .2em; }
+      /* ── Sobre ───────────────────────────────────────────────── */
+      .sobre-split {
+        grid-template-columns: 2fr 3fr;
+        grid-template-areas: "txt txt" "stats foto";
+        column-gap: var(--sp-4);
+        row-gap: var(--sp-6);
+      }
+      .sobre-foto-card .art-lbl { display: none; }
+      .sobre-txt p { font-size: var(--text-sm); line-height: 1.75; }
+      .meta-grid { padding-top: 0; border-top: none; grid-template-columns: 1fr; gap: 10px; }
+      .meta-grid strong { font-size: 1.8rem; }
+      .sobre-foto { align-self: start; }
+      .sobre-foto-card { height: 210px; border-radius: var(--r-sm); }
+      /* ── Serviços ─────────────────────────────────────────────── */
+      .serv-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .serv-hd { margin-bottom: var(--sp-8); }
+      .serv-hd p { font-size: var(--text-sm); }
+      .serv-card { padding: var(--sp-5) var(--sp-4); }
+      .serv-card h3 { font-size: 1rem; }
+      .icon-circ { width: 42px; height: 42px; margin-bottom: var(--sp-4); }
+      .icon-circ svg { width: 16px; height: 16px; }
+      /* ── Experiência: scroll horizontal no mobile ─────────────── */
+      .exp-row .t-nav { display: none; }
+      .exp-window { overflow-x: scroll; scroll-snap-type: x mandatory; scrollbar-width: none; }
+      .exp-window::-webkit-scrollbar { display: none; }
+      .exp-track { transform: none !important; transition: none !important; width: max-content; }
+      .exp-slide { width: 72vw; scroll-snap-align: start; flex: 0 0 auto; margin-right: 10px; }
+      .exp-card { width: 100%; height: 300px; }
+      .exp-card iframe { touch-action: manipulation; }
+      .exp-dots { display: none; }
+      .exp-hd p { font-size: var(--text-sm); }
+      /* ── Depoimentos: scroll nativo no mobile ─────────────────── */
+      .t-nav { display: none; }
+      .dep-window { overflow-x: scroll; scroll-snap-type: x mandatory; scrollbar-width: none; }
+      .dep-window::-webkit-scrollbar { display: none; }
+      .dep-track { transform: none !important; transition: none !important; width: max-content; }
+      .dep-slide { width: 72vw; scroll-snap-align: start; flex: 0 0 auto; margin-right: 10px; }
+      .dep-card { width: 100%; height: 300px; }
+      .dep-dots { display: none; }
+      /* ── Localização ─────────────────────────────────────────── */
+      .loc-grid { grid-template-columns: 1fr; gap: var(--sp-8); }
+      .map-box { min-height: 240px; }
+      .loc-cta { gap: 10px; }
+      .info-val { font-size: var(--text-md); }
+      .info-lbl { font-size: .6rem; }
+      /* ── CTA / Agendar ───────────────────────────────────────── */
+      #agendar { padding: 64px 20px; }
+      #agendar .h2 { max-width: 100%; margin-bottom: 28px; }
+      /* ── Footer ─────────────────────────────────────────────── */
+      .foot-bar { flex-direction: column; text-align: center; gap: 14px; }
+      /* ── Espaçamento geral ───────────────────────────────────── */
+      .section { padding: 52px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ──────────────────────────────────────────────────── -->
+  <nav class="nav" id="nav">
+    <a href="#" class="nav-logo">
+      <img src="logo-marcoliver-transparent.png" alt="MarcOliver Barbearia">
+    </a>
+    <ul class="nav-links">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#experiencia">Experiência</a></li>
+      <li><a href="#depoimentos">Depoimentos</a></li>
+      <li><a href="#localizacao">Localização</a></li>
+    </ul>
+    <a href="https://sites.appbarber.com.br/marcoliverbarbe-b6za" target="_blank" rel="noopener" class="nav-cta">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      Agendar
+    </a>
+    <button class="nav-ham" id="ham" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ── MOBILE MENU ───────────────────────────────────────────── -->
+  <nav class="mob-menu" id="mob">
+    <button class="mob-close" id="mob-x" aria-label="Fechar">×</button>
+    <img src="logo-marcoliver-transparent.png" alt="MarcOliver">
+    <a href="#sobre"       onclick="closeMob()">Sobre</a>
+    <a href="#servicos"    onclick="closeMob()">Serviços</a>
+    <a href="#experiencia" onclick="closeMob()">Experiência</a>
+    <a href="#depoimentos" onclick="closeMob()">Depoimentos</a>
+    <a href="#localizacao" onclick="closeMob()">Localização</a>
+    <a href="https://sites.appbarber.com.br/marcoliverbarbe-b6za" target="_blank" rel="noopener">Agendar</a>
+  </nav>
+
+  <!-- ── HERO (SLIDESHOW) ─────────────────────────────────────── -->
+  <section id="hero">
+    <div class="hero-slides">
+      <div class="hero-slide active"><img src="img-ambiente-1.jpeg" alt="Barbearia MarcOliver — interior"></div>
+      <div class="hero-slide"><img src="img-ambiente-2.jpeg" alt="Barbearia MarcOliver — sala de espera"></div>
+    </div>
+    <div class="hero-aurora">
+      <div class="hero-aurora-blob hero-aurora-blob--1"></div>
+      <div class="hero-aurora-blob hero-aurora-blob--2"></div>
+    </div>
+    <div class="hero-grid"></div>
+    <div class="hero-veil"></div>
+
+    <!-- Floating social proof tags — desktop only -->
+    <div class="hero-float-tag" style="top:26%;right:8%;animation:stickerFloat1 7s ease-in-out infinite;">
+      <span class="dot"></span>5.0 ★ · 170 Avaliações
+    </div>
+    <div class="hero-float-tag" style="top:46%;right:5%;animation:stickerFloat0 9s ease-in-out 1.5s infinite;">
+      <span class="dot"></span>15+ Anos de Experiência
+    </div>
+    <div class="hero-float-tag" style="bottom:32%;right:9%;animation:stickerFloat2 8s ease-in-out .8s infinite;">
+      <span class="dot"></span>Agendamento Online
+    </div>
+
+    <div class="hero-scroll">
+      <span class="scroll-txt">Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+    <div class="hero-body">
+      <h1 class="hero-h1">A arte<br>do <em>corte</em><br>perfeito.</h1>
+      <p class="hero-sub">Av. José Bonifácio, 2295 &nbsp;·&nbsp; Jardim das Paineiras &nbsp;·&nbsp; Campinas</p>
+      <div class="hero-actions">
+        <a href="https://sites.appbarber.com.br/marcoliverbarbe-b6za" target="_blank" rel="noopener" class="btn btn-hero">
+          Agendar Agora
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="hero-pager">
+      <button class="pager-dot active" aria-label="Slide 1"></button>
+      <button class="pager-dot" aria-label="Slide 2"></button>
+    </div>
+  </section>
+
+  <!-- ── TICKER ────────────────────────────────────────────────── -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>Corte Masculino</span><span class="sep">·</span><span>Fade</span><span class="sep">·</span><span>Degradê</span><span class="sep">·</span><span>Barba Completa</span><span class="sep">·</span><span>Acabamento</span><span class="sep">·</span><span>Sobrancelha</span><span class="sep">·</span><span>Pigmentação</span><span class="sep">·</span><span>Hidratação</span><span class="sep">·</span><span>Corte Navalhado</span><span class="sep">·</span><span>MarcOliver Barbearia</span><span class="sep">·</span>
+      <span>Corte Masculino</span><span class="sep">·</span><span>Fade</span><span class="sep">·</span><span>Degradê</span><span class="sep">·</span><span>Barba Completa</span><span class="sep">·</span><span>Acabamento</span><span class="sep">·</span><span>Sobrancelha</span><span class="sep">·</span><span>Pigmentação</span><span class="sep">·</span><span>Hidratação</span><span class="sep">·</span><span>Corte Navalhado</span><span class="sep">·</span><span>MarcOliver Barbearia</span><span class="sep">·</span>
+    </div>
+  </div>
+
+  <!-- ── SOBRE ──────────────────────────────────────────────────── -->
+  <section id="sobre" class="section">
+    <div class="wrap">
+      <div class="sobre-split">
+        <div class="sobre-txt r">
+          <p class="tag">O Barbeiro</p>
+          <h2 class="h2">Um artista que<br><em>transforma</em></h2>
+          <p><strong>Marcos</strong> é mais que um barbeiro — é um especialista dedicado ao seu ofício. Com anos de experiência e paixão pelos detalhes, ele transforma cada visita em uma experiência única.</p>
+          <p>Na MarcOliver, cada corte é executado com precisão e cuidado, refletindo o estilo individual de cada cliente. Do clássico ao contemporâneo, o resultado é sempre impecável.</p>
+        </div>
+        <div class="sobre-foto r d2">
+          <div class="art-card sobre-foto-card">
+            <img src="img-marcos-principal.jpeg" alt="Marcos — barbeiro MarcOliver" style="object-fit:cover; object-position: center 10%;">
+            <span class="art-lbl">Marcos · Barbeiro</span>
+          </div>
+        </div>
+        <ul class="meta-grid r d1">
+          <li><strong>15+</strong><span>Anos de experiência</span></li>
+          <li><strong>2k+</strong><span>Clientes atendidos</span></li>
+          <li><strong>5.0★ </strong><span>170 AVALIAÇÕES</span></li>
+          <li><strong>100%</strong><span>Satisfação garantida</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SERVIÇOS ───────────────────────────────────────────────── -->
+  <section id="servicos" class="section">
+    <div class="wrap">
+      <div class="serv-hd r">
+        <p class="tag">Nossos Serviços</p>
+        <h2 class="h2">Tudo que você<br><em>precisa</em></h2>
+        <p>Do corte clássico ao acabamento perfeito — tudo com a excelência MarcOliver.</p>
+      </div>
+      <div class="serv-grid">
+        <article class="serv-card r">
+          <div class="icon-circ">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/><path d="M6 12h12M18 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/><path d="M9 9.5 18 6M9 14.5l9 3.5"/></svg>
+          </div>
+          <h3>Corte de Cabelo</h3>
+          <p>Tesoura, máquina e navalha com precisão e estilo.</p>
+        </article>
+        <article class="serv-card r d1">
+          <div class="icon-circ">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><path d="M8 3v3M12 3v3M16 3v3"/></svg>
+          </div>
+          <h3>Barba Completa</h3>
+          <p>Modelagem, hidratação e acabamento impecável.</p>
+        </article>
+        <article class="serv-card r d2">
+          <div class="icon-circ">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M3 20h18M3 16h18M3 12h14M3 8h10M3 4h6"/></svg>
+          </div>
+          <h3>Fade & Degradê</h3>
+          <p>Transição suave e alta precisão na máquina.</p>
+        </article>
+        <article class="serv-card r">
+          <div class="icon-circ">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <h3>Sobrancelha</h3>
+          <p>Design e acabamento para um visual completo.</p>
+        </article>
+        <article class="serv-card r d1">
+          <div class="icon-circ">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          </div>
+          <h3>Pigmentação</h3>
+          <p>Cobertura de fios brancos com resultado natural.</p>
+        </article>
+        <article class="serv-card r d2">
+          <div class="icon-circ">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <h3>Acabamento</h3>
+          <p>Finalização com produtos premium e toque único.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EXPERIÊNCIA ──────────────────────────────────────── -->
+  <section id="experiencia" class="section">
+    <div class="wrap">
+      <div class="exp-hd r">
+        <p class="tag">A Experiência</p>
+        <h2 class="h2">Viva a <em>atmosfera</em></h2>
+        <p>Um momento de cuidado, estilo e bem-estar. Assim é a MarcOliver.</p>
+      </div>
+      <div class="exp-row r d1">
+        <button class="t-nav" id="exp-prev" aria-label="Anterior">‹</button>
+        <div class="exp-window">
+          <div class="exp-track" id="exp-track">
+            <div class="exp-slide">
+              <div class="exp-card">
+                <iframe src="https://drive.google.com/file/d/1PhhASa3HLAQT9Hr7OYkXIHBbaVyF_hUh/preview" allow="autoplay; fullscreen; encrypted-media" allowfullscreen sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-presentation" title="Experiência MarcOliver 1"></iframe>
+              </div>
+            </div>
+            <div class="exp-slide">
+              <div class="exp-card">
+                <iframe src="https://drive.google.com/file/d/1pDdfKKDB1JuaqojH9U_neMQ35EH6_Vp4/preview" allow="autoplay; fullscreen; encrypted-media" allowfullscreen sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-presentation" title="Experiência MarcOliver 2"></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="t-nav" id="exp-next" aria-label="Próximo">›</button>
+      </div>
+      <div class="exp-dots">
+        <button class="e-dot active" aria-label="Vídeo 1"></button>
+        <button class="e-dot" aria-label="Vídeo 2"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DEPOIMENTOS (CAROUSEL) ────────────────────────────────── -->
+  <section id="depoimentos" class="section">
+    <div class="wrap">
+      <div class="dep-hd r">
+        <p class="tag">Depoimentos</p>
+        <h2 class="h2">O que nossos <em>clientes</em> dizem</h2>
+      </div>
+      <div class="dep-row r d1">
+        <button class="t-nav" id="dep-prev" aria-label="Anterior">‹</button>
+        <div class="dep-window">
+          <div class="dep-track" id="dep-track">
+            <div class="dep-slide">
+              <div class="dep-card">
+                <iframe src="https://drive.google.com/file/d/1U6ThmqHUVSETGC7OY1aHv7lkg16IEP3z/preview" allow="autoplay; fullscreen; encrypted-media" allowfullscreen sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-presentation" title="Depoimento 1"></iframe>
+                <div class="dep-info"><p class="dep-stars">★★★★★</p></div>
+              </div>
+            </div>
+            <div class="dep-slide">
+              <div class="dep-card">
+                <iframe src="https://drive.google.com/file/d/1cUwY4xXCNfbloB3gScHZimCLjt1s32wi/preview" allow="autoplay; fullscreen; encrypted-media" allowfullscreen sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-presentation" title="Depoimento 2"></iframe>
+                <div class="dep-info"><p class="dep-stars">★★★★★</p></div>
+              </div>
+            </div>
+            <div class="dep-slide">
+              <div class="dep-card">
+                <iframe src="https://drive.google.com/file/d/1ZOnz_o-RLSwCqHNPqrjhwuHst4xcZLFg/preview" allow="autoplay; fullscreen; encrypted-media" allowfullscreen sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-presentation" title="Depoimento 3"></iframe>
+                <div class="dep-info"><p class="dep-stars">★★★★★</p></div>
+              </div>
+            </div>
+            <div class="dep-slide">
+              <div class="dep-card">
+                <iframe src="https://drive.google.com/file/d/1In9nQDGanTtJjTKPz07gUlgSLA0lQKj0/preview" allow="autoplay; fullscreen; encrypted-media" allowfullscreen sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-presentation" title="Depoimento 4"></iframe>
+                <div class="dep-info"><p class="dep-stars">★★★★★</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="t-nav" id="dep-next" aria-label="Próximo">›</button>
+      </div>
+      <div class="dep-dots">
+        <button class="d-dot active" aria-label="Vídeo 1"></button>
+        <button class="d-dot" aria-label="Vídeo 2"></button>
+        <button class="d-dot" aria-label="Vídeo 3"></button>
+        <button class="d-dot" aria-label="Vídeo 4"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── REDES SOCIAIS — removida (redundante com footer) ─────────── -->
+  <section id="redes" class="section" style="display:none">
+    <div class="wrap">
+      <div class="redes-inner">
+        <div class="redes-head r">
+          <p class="tag">Redes Sociais</p>
+          <h2 class="h2">Acompanhe o<br><em>dia a dia</em></h2>
+          <p>Siga o Instagram da MarcOliver para ver os trabalhos, novidades e promoções em tempo real.</p>
+        </div>
+        <div class="redes-cards r d1">
+          <a class="rede-card" href="https://www.instagram.com/marcoliverbarbearia/" target="_blank" rel="noopener">
+            <div class="rede-ic">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--muted)" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="var(--muted)" stroke="none"/></svg>
+            </div>
+            <div class="rede-txt">
+              <span class="rede-handle">@marcoliverbarbearia</span>
+              <span class="rede-sub">Fotos e vídeos dos cortes diários</span>
+            </div>
+            <span class="rede-arrow">↗</span>
+          </a>
+          <a class="rede-card" href="https://wa.me/5519987315596" target="_blank" rel="noopener">
+            <div class="rede-ic">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="var(--muted)" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            </div>
+            <div class="rede-txt">
+              <span class="rede-handle">(19) 98731-5596</span>
+              <span class="rede-sub">Atendimento e dúvidas via WhatsApp</span>
+            </div>
+            <span class="rede-arrow">↗</span>
+          </a>
+          <a class="rede-card" href="https://sites.appbarber.com.br/marcoliverbarbe-b6za" target="_blank" rel="noopener">
+            <div class="rede-ic">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--muted)" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            </div>
+            <div class="rede-txt">
+              <span class="rede-handle">Agendar Online</span>
+              <span class="rede-sub">Reserve seu horário pelo AppBarber</span>
+            </div>
+            <span class="rede-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── AGENDAR CTA ────────────────────────────────────────────── -->
+  <section id="agendar">
+    <p class="tag r">Agendamento Online</p>
+    <h2 class="h2 r d1">A próxima visita tem<br><em>o seu nome.</em></h2>
+    <a href="https://sites.appbarber.com.br/marcoliverbarbe-b6za" target="_blank" rel="noopener" class="btn btn-dark r d2">
+      Agendar Pelo App
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </section>
+
+  <!-- ── LOCALIZAÇÃO ───────────────────────────────────────────── -->
+  <section id="localizacao" class="section">
+    <div class="wrap">
+      <div class="loc-grid">
+        <div class="loc-left r">
+          <p class="tag">Localização</p>
+          <h2 class="h2">Nos encontre <em>aqui</em></h2>
+          <div class="info-blk">
+            <p class="info-lbl">Endereço</p>
+            <p class="info-val">Av. José Bonifácio, 2295<br>Jardim das Paineiras<br>Campinas — SP, 13092-305</p>
+          </div>
+          <div class="info-blk">
+            <p class="info-lbl">Horário de Atendimento</p>
+            <p class="info-val">Seg – Sex: 09h às 20h<br>Sábado: 08h às 18h<br>Domingo: Fechado</p>
+          </div>
+          <div class="info-blk">
+            <p class="info-lbl">Contato</p>
+            <p class="info-val">
+              <a href="https://wa.me/5519987315596" target="_blank" rel="noopener">(19) 98731-5596</a><br>
+              <a href="https://www.instagram.com/marcoliverbarbearia/" target="_blank" rel="noopener">@marcoliverbarbearia</a>
+            </p>
+          </div>
+          <div class="loc-cta">
+            <a href="https://maps.google.com/?q=Av.+José+Bonifácio,+2295,+Jardim+das+Paineiras,+Campinas,+SP,+13092-305" target="_blank" rel="noopener" class="btn btn-gmaps">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Google Maps
+            </a>
+            <a href="https://waze.com/ul?q=Av.+José+Bonifácio+2295+Campinas+SP" target="_blank" rel="noopener" class="btn btn-waze">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="10" r="8"/><path d="M12 18v4M8 22h8"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/><path d="M9 13s1 2 3 2 3-2 3-2"/></svg>
+              Waze
+            </a>
+          </div>
+        </div>
+        <div class="map-box r d2">
+          <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-47.0960%2C-22.9120%2C-47.0620%2C-22.8860&amp;layer=mapnik&amp;marker=-22.8990%2C-47.0790" allowfullscreen="" loading="lazy" title="MarcOliver Barbearia — Mapa"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────────── -->
+  <footer id="contato">
+    <div class="wrap">
+      <div class="foot-bar">
+        <img src="logo-marcoliver-transparent.png" alt="MarcOliver Barbearia">
+        <span class="foot-copy">© MarcOliver Barbearia · Campinas, SP</span>
+        <div class="foot-links">
+          <a href="https://www.instagram.com/marcoliverbarbearia/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://wa.me/5519987315596" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="https://sites.appbarber.com.br/marcoliverbarbe-b6za" target="_blank" rel="noopener">Agendar</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── WHATSAPP FAB ───────────────────────────────────────────── -->
+  <a id="wa-fab" href="https://wa.me/5519987315596" target="_blank" rel="noopener" aria-label="Falar pelo WhatsApp">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path></svg>
+  </a>
+
+
+  <!-- ── SCRIPTS ────────────────────────────────────────────────── -->
+  <script>
+    /* NAV */
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('stuck', scrollY > 60), {passive:true});
+
+    /* Mobile menu */
+    document.getElementById('ham').addEventListener('click', () => document.getElementById('mob').classList.add('open'));
+    document.getElementById('mob-x').addEventListener('click', closeMob);
+    function closeMob() { document.getElementById('mob').classList.remove('open'); }
+
+    /* Hero slideshow */
+    const heroSlides = document.querySelectorAll('.hero-slide');
+    const pagerDots  = document.querySelectorAll('.pager-dot');
+    let curSlide = 0, slideTimer;
+    function goSlide(n) {
+      heroSlides[curSlide].classList.remove('active');
+      pagerDots[curSlide].classList.remove('active');
+      curSlide = (n + heroSlides.length) % heroSlides.length;
+      heroSlides[curSlide].classList.add('active');
+      pagerDots[curSlide].classList.add('active');
+      clearInterval(slideTimer);
+      slideTimer = setInterval(() => goSlide(curSlide + 1), 5000);
+    }
+    slideTimer = setInterval(() => goSlide(curSlide + 1), 5000);
+    pagerDots.forEach((dot, i) => dot.addEventListener('click', () => goSlide(i)));
+
+    /* Experiência carousel — 2 slides */
+    const expTrack = document.getElementById('exp-track');
+    const eDots    = document.querySelectorAll('.e-dot');
+    const EXP_TOTAL = 2;
+    let expCur = 0;
+    function goExp(n) {
+      expCur = ((n % EXP_TOTAL) + EXP_TOTAL) % EXP_TOTAL;
+      expTrack.style.transform = `translateX(-${expCur * 100}%)`;
+      eDots.forEach((d, i) => d.classList.toggle('active', i === expCur));
+    }
+    document.getElementById('exp-prev').addEventListener('click', () => goExp(expCur - 1));
+    document.getElementById('exp-next').addEventListener('click', () => goExp(expCur + 1));
+    eDots.forEach((dot, i) => dot.addEventListener('click', () => goExp(i)));
+
+    /* Depoimentos carousel — 4 slides, 1 vídeo por vez */
+    const depTrack = document.getElementById('dep-track');
+    const dDots    = document.querySelectorAll('.d-dot');
+    const DEP_TOTAL = 4;
+    let depCur = 0;
+    function goDepo(n) {
+      depCur = ((n % DEP_TOTAL) + DEP_TOTAL) % DEP_TOTAL;
+      depTrack.style.transform = `translateX(-${depCur * 100}%)`;
+      dDots.forEach((d, i) => d.classList.toggle('active', i === depCur));
+    }
+    document.getElementById('dep-prev').addEventListener('click', () => goDepo(depCur - 1));
+    document.getElementById('dep-next').addEventListener('click', () => goDepo(depCur + 1));
+    dDots.forEach((dot, i) => dot.addEventListener('click', () => goDepo(i)));
+
+    /* Reveal */
+    const revObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); revObs.unobserve(e.target); } });
+    }, {threshold: 0.08});
+    document.querySelectorAll('.r').forEach(el => revObs.observe(el));
+  </script>
+
+
+</body>
+</html>
